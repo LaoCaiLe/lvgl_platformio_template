@@ -55,10 +55,14 @@ static void lv_circle_show(void)
 	lv_arc_set_rotation(arc, 270); //旋转90度
 
 	/*数字显示*/
+	static lv_style_t font_style;
+    lv_style_set_text_color(&font_style, LV_STATE_DEFAULT, LV_COLOR_RED);
+    lv_style_set_text_font(&font_style, LV_STATE_DEFAULT, &lv_font_montserrat_20);
+
 	lv_obj_t *label = lv_label_create(arc,NULL);	
 	lv_obj_set_size(label,100,100);
-	lv_label_set_text(label,"hello,circle");
-	lv_obj_set_style_local_text_color(label,LV_OBJ_PART_MAIN,LV_STATE_DEFAULT,LV_COLOR_RED);	
+	lv_label_set_text(label,"hello, lvgl");
+	lv_obj_add_style(label, LV_OBJ_PART_MAIN, &font_style);
 	lv_obj_align(label, arc, LV_ALIGN_CENTER, 0, 0);
 
 	#if 0

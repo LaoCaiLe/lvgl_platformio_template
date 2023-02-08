@@ -1,13 +1,13 @@
 /**
  * @file lv_conf.h
- * Configuration file for v7.10.1
+ * Configuration file for v7.11.0
  */
 
 /*
  * COPY THIS FILE AS `lv_conf.h` NEXT TO the `lvgl` FOLDER
  */
 
-#if 1/*Set it to "1" to enable content*/
+#if 1 /*Set it to "1" to enable content*/
 
 #ifndef LV_CONF_H
 #define LV_CONF_H
@@ -387,7 +387,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 #define LV_FONT_MONTSERRAT_14    1
 #define LV_FONT_MONTSERRAT_16    0
 #define LV_FONT_MONTSERRAT_18    0
-#define LV_FONT_MONTSERRAT_20    0
+#define LV_FONT_MONTSERRAT_20    1
 #define LV_FONT_MONTSERRAT_22    0
 #define LV_FONT_MONTSERRAT_24    0
 #define LV_FONT_MONTSERRAT_26    0

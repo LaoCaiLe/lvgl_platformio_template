@@ -20,6 +20,7 @@ TFT_eSPI tft = TFT_eSPI();
 
 static lv_disp_buf_t draw_buf_dsc_1;
 static lv_color_t draw_buf_1[LV_HOR_RES_MAX * 10];                          /*A buffer for 10 rows*/
+static lv_color_t draw_buf_2[LV_HOR_RES_MAX * 10];                          /*A buffer for 10 rows*/
 
 
 /**********************
@@ -72,7 +73,7 @@ void Display::init(void)
      *----------------------------*/
  
 
-    lv_disp_buf_init(&draw_buf_dsc_1, draw_buf_1, NULL, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
+    lv_disp_buf_init(&draw_buf_dsc_1, draw_buf_1, draw_buf_2, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
 
     lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
