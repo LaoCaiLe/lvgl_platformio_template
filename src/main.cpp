@@ -1,55 +1,9 @@
 #include <Arduino.h>
-#include <Wire.h>
 #include <lvgl.h>
 #include <TFT_eSPI.h>
+#include "display.h"
 
-
-#define led 2
-
-// AS_5600 ams5600;
-TFT_eSPI tft = TFT_eSPI();   
-
-static lv_disp_buf_t draw_buf_dsc_1;
-static lv_color_t draw_buf_1[LV_HOR_RES_MAX * 10];                          /*A buffer for 10 rows*/
-
-void my_print(const char * buf)
-{
-    Serial.printf(buf);
-    Serial.flush();
-}
-
-
-/**
- * Start animation on an event
- */
-
-void lv_symbol_show()
-{
-	lv_obj_t * my_label = lv_label_create(lv_scr_act(), NULL);
-	
-	lv_label_set_text(my_label, LV_SYMBOL_OK "ok");
-	// lv_obj_set_size(my_label,160,160);	
-	lv_obj_align(my_label,NULL, LV_ALIGN_CENTER, 0 ,0);//、
-	// lv_obj_set_opa_scale_enable(my_label,ENABLE);   //开启透明度
-	// lv_obj_set_opa_scale(my_label,75);              //设置透明度50%
-
-	lv_obj_t * my_label2 = lv_label_create(lv_scr_act(), NULL);
-	lv_label_set_text(my_label2, LV_SYMBOL_MUTE "Mute");
-	lv_obj_align(my_label2,my_label,LV_ALIGN_IN_BOTTOM_MID,0,30);
-
-}
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
-{
-    uint32_t w = (area->x2 - area->x1 + 1);
-    uint32_t h = (area->y2 - area->y1 + 1);
-
-    tft.startWrite();
-    tft.setAddrWindow(area->x1, area->y1, w, h);
-    tft.pushColors(&color_p->full, w * h, true);
-    tft.endWrite();
-
-    lv_disp_flush_ready(disp);
-}
+Display screen;
 
 static void ArcTaskCb(lv_task_t *t)
 {
@@ -70,7 +24,7 @@ static void ArcTaskCb(lv_task_t *t)
 	}
 }
 
-void lv_circle_show(void)
+static void lv_circle_show(void)
 {	
 	/*前景style*/
 	static lv_style_t style_fg;
@@ -121,32 +75,16 @@ void lv_circle_show(void)
 	
 }
 void setup() {
-  // put your setup code here, to run once:
-    pinMode(led, OUTPUT);
 
+    
     Serial.begin(9600);
 
-    lv_init();
-
-    tft.begin();
-
-    lv_disp_buf_init(&draw_buf_dsc_1, draw_buf_1, NULL, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
-
-    lv_disp_drv_t disp_drv;
-    lv_disp_drv_init(&disp_drv);
-    disp_drv.hor_res = LV_HOR_RES_MAX;
-    disp_drv.ver_res = LV_VER_RES_MAX;
-    disp_drv.flush_cb = my_disp_flush;
-    disp_drv.buffer = &draw_buf_dsc_1;
-    lv_disp_drv_register(&disp_drv);
+	screen.init();
 
     lv_circle_show();
 }
 
-
-
 void loop() {
 
-    lv_task_handler();
-
+	screen.update();
 }
